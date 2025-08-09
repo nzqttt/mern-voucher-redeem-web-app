@@ -1,3 +1,15 @@
+import { Navigate } from 'react-router-dom'; // at top if not already
+import HowItWorksPage from '../components/app_components/HowItWorksPage/HowItWorksPage';
+import AdminPage from '../components/app_components/Admin/AdminPage';
+import AdminCategoryPage from '../components/app_components/Admin/AdminCategoryPage';
+import AdminVoucherPage from '../components/app_components/Admin/AdminVoucherPage';
+import AdminUserPage from '../components/app_components/Admin/AdminUserPage';
+import AdminDashboard from '../components/app_components/Admin/AdminDashboard';
+import RegisterPage from "../components/app_components/UserAuth/RegisterPage";
+
+
+
+import MyVouchersPage from "../components/app_components/MyVouchers/MyVouchersPage";
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -94,42 +106,60 @@ import UserChangePasswordProjectLayoutPage from '../components/cb_components/Use
 import TestProjectLayoutPage from '../components/cb_components/TestsPage/TestProjectLayoutPage';
 import SingleTestsPage from '../components/cb_components/TestsPage/SingleTestsPage';
 
-import SingleVouchersPage from "../components/app_components/VouchersPage/SingleVouchersPage";
-import VoucherProjectLayoutPage from "../components/app_components/VouchersPage/VoucherProjectLayoutPage";
+import SingleVouchersPage from "../components/app_components/HomePage/SingleVouchersPage";
+import VoucherProjectLayoutPage from "../components/app_components/HomePage/VoucherProjectLayoutPage";
 import SingleCategoryPage from "../components/app_components/CategoryPage/SingleCategoryPage";
 import CategoryProjectLayoutPage from "../components/app_components/CategoryPage/CategoryProjectLayoutPage";
-import SingleCartItemsPage from "../components/app_components/CartItemsPage/SingleCartItemsPage";
-import CartItemProjectLayoutPage from "../components/app_components/CartItemsPage/CartItemProjectLayoutPage";
-import SingleCartItemHistoryPage from "../components/app_components/CartItemHistoryPage/SingleCartItemHistoryPage";
-import CartItemHistoryProjectLayoutPage from "../components/app_components/CartItemHistoryPage/CartItemHistoryProjectLayoutPage";
+import SingleCartItemHistoryPage from "../components/app_components/MyVouchers/SingleCartItemHistoryPage";
+import CartItemHistoryProjectLayoutPage from "../components/app_components/MyVouchers/CartItemHistoryProjectLayoutPage";
+import HomePage from "../components/app_components/HomePage/HomePage";
+import VoucherDetailsModal from "../components/app_components/VoucherDetails/VoucherDetailsModal";
+import CartPage from "../components/app_components/CartPage/CartPage";
+import ProfilePage from "../components/app_components/ProfilePage/ProfilePage";
 //  ~cb-add-import~
 
 const MyRouter = (props) => {
     return (
         <Routes>
-            <Route path="/" exact element={props.isLoggedIn ? <DashboardAdminControl /> : <LoginPage />} />
-            <Route path="/login" exact element={props.isLoggedIn === true ? <DashboardAdminControl /> : <LoginPage />} />
+        <Route path="/signup" element={<RegisterPage />} />
+        <Route path="/" exact element={ 
+            props.isLoggedIn ? <Navigate to="/home" replace /> : <LoginPage />
+        } />
+        <Route path="/login" exact element={
+  props.isLoggedIn ? <Navigate to="/home" replace /> : <LoginPage />
+} />
             <Route path="/reset/:singleChangeForgotPasswordId" exact element={<ResetPage />} />
-            <Route path="/signup" exact element={<SignUpPage />} />
             <Route path="/maintenance" exact element={<MaintenancePage />} />
             <Route path="/login-faq" exact element={<LoginFaqPage />} />
 
+            <Route path="/how-it-works" exact element={<HowItWorksPage />} />
             <Route element={<ProtectedRoute redirectPath={'/login'} />}>
-            <Route path="/project" exact element={<DashboardAdminControl />} />
-                // user details
+                {/* Admin Panel Layout and Nested Routes */}
+                <Route path="/admin" element={<AdminPage />}>
+                  <Route path="categories" element={<AdminCategoryPage />} />
+                  <Route path="vouchers" element={<AdminVoucherPage />} />
+                  {/* ✅ Index route for /admin */}
+                <Route index element={<AdminDashboard />} />
+                 <Route path="users" element={<AdminUserPage />} />
+  
+                  {/* Add more nested admin routes here, e.g. <Route path="users" element={<AdminUsersPage />} /> */}
+                </Route>
+           
                 <Route path="/account" exact element={<Account />} />
                 <Route path="/users/:singleUsersId" exact element={<SingleUsersPage />} />
                 <Route path="/users" exact element={<UserProjectLayoutPage />} />
 
                 // myapp
+<Route path="/home" exact element={<HomePage />} />
 <Route path="/vouchers/:singleVouchersId" exact element={<SingleVouchersPage />} />
 <Route path="/vouchers" exact element={<VoucherProjectLayoutPage />} />
 <Route path="/category/:singleCategoryId" exact element={<SingleCategoryPage />} />
 <Route path="/category" exact element={<CategoryProjectLayoutPage />} />
-<Route path="/cartItems/:singleCartItemsId" exact element={<SingleCartItemsPage />} />
-<Route path="/cartItems" exact element={<CartItemProjectLayoutPage />} />
 <Route path="/cartItemHistory/:singleCartItemHistoryId" exact element={<SingleCartItemHistoryPage />} />
 <Route path="/cartItemHistory" exact element={<CartItemHistoryProjectLayoutPage />} />
+<Route path="/my-vouchers" exact element={<MyVouchersPage />} />
+<Route path="/cart" exact element={<CartPage />} />
+<Route path="/profile" exact element={<ProfilePage />} />
                 {/* ~cb-add-protected-route~ */}
 
                 // dashboards

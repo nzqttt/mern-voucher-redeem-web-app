@@ -27,8 +27,10 @@ const Account = (props) => {
   useEffect(() => {
     // Fetch last login date for the user
     client
-      .service("loginHistory") 
-      .find({ query: { userId: user._id, $limit: 1, $sort: { loginTime: -1 } } }) // Get the most recent login
+      .service("loginHistory")
+      .find({
+        query: { userId: user._id, $limit: 1, $sort: { loginTime: -1 } },
+      }) // Get the most recent login
       .then((res) => {
         if (res.data.length > 0) {
           setLastLogin(new Date(res.data[0].loginTime).toLocaleString()); // Format the date as needed
@@ -158,7 +160,7 @@ const Account = (props) => {
   function BackButton() {
     return (
       <Button
-        onClick={() => navigate("/project")}
+        onClick={() => navigate("/home")}
         icon="pi pi-angle-left"
         label="Back to dashboard"
         className="gap-1.5 font-semibold tracking-wide text-right text-[#D30000] bg-transparent border-0 ml-[-1.2rem]"

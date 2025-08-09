@@ -1,0 +1,50 @@
+// New layout styles for top navigation
+.layout-normal-container {
+    min-height: 100vh;
+    background-color: var(--surface-ground);
+}
+
+// Top navigation bar styles
+.top-navigation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background-color: var(--bg-red-light);
+    border-bottom: 1px solid var(--border-red);
+    padding: 0.75rem 2.5rem;
+    height: 4rem;
+    box-shadow: 0 2px 4px var(--shadow-light);
+}
+
+// Main content area
+.main-content {
+    margin-top: 4rem; // Match .top-navigation height (desktop)
+    padding: 1.5rem;
+    min-height: calc(100vh - 4rem);
+    background: var(--bg-red-light);
+}
+
+// HomePage specific adjustments
+.homepage-container {
+    padding-top: 1rem;
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+    .top-navigation {
+        padding: 0.75rem 1rem;
+        height: 3.5rem;
+    }
+    
+    .main-content {
+        margin-top: 3.5rem; // Match .top-navigation height (mobile)
+        padding: 1rem;
+    }
+    
+    .homepage-container {
+        padding: 0 1rem;
+        padding-top: 0.5rem;
+    }
+}

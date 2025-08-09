@@ -1,32 +1,34 @@
 const { authenticate } = require("@feathersjs/authentication").hooks;
+
 module.exports = {
   before: {
-    all: [authenticate("jwt")],
+    all: [],
     find: [],
     get: [],
-    create: [],
+    create: [
+      authenticate("jwt"),
+      (context) => {
+        const { req, res } = context.params;
+
+        if (!req || !res) {
+          throw new Error("Missing req/res in params. Make sure you're using REST.");
+        }
+
+        // Inject into context.data so the service class can access it
+        context.data = {
+          ...context.data,
+          req,
+          res,
+        };
+
+        return context;
+      },
+    ],
     update: [],
     patch: [],
     remove: [],
   },
-
   after: {
     all: [],
-    find: [],
-    get: [],
-    create: [],
-    update: [],
-    patch: [],
-    remove: [],
-  },
-
-  error: {
-    all: [],
-    find: [],
-    get: [],
-    create: [],
-    update: [],
-    patch: [],
-    remove: [],
   },
 };

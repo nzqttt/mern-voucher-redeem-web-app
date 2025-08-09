@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import MyRouter from "./MyRouter/MyRouter";
 import store from "./utils/store";
 import { AppConfigStatic } from "./AppConfigStatic";
-import AppTopbar from "./components/Layouts/AppTopbar";
+import TopBar from "./components/Layouts/TopBar";
 import AppFooter from "./components/Layouts/AppFooter";
 import MainLayout from "./components/Layouts/MainLayout";
 import LoadingWrapper from "./MyRouter/wrappers/LoadingWrapper";
@@ -19,15 +19,12 @@ import "prismjs/themes/prism-coy.css";
 import "./assets/layout/layout.scss";
 import "./assets/mainTheme/mainTheme.css";
 import "./css/customStyles.css";
+import "./css/index.css";
 
 const App = () => {
-  const location = useLocation();
-
-  const showSideMenuButton = false;
-
   return (
     <Provider store={store}>
-      <AppTopbar showSideMenuButton={showSideMenuButton} />
+      <TopBar />
       <MainLayout>
         <MyRouter />
       </MainLayout>

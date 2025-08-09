@@ -1,15 +1,17 @@
 const { authenticate } = require("@feathersjs/authentication").hooks;
-const { hashPassword, protect } =
-  require("@feathersjs/authentication-local").hooks;
+const { hashPassword, protect } = require("@feathersjs/authentication-local").hooks;
+const { disallow } = require("feathers-hooks-common");
 
 module.exports = {
   before: {
     all: [],
-    find: [],
+    find: [authenticate("jwt")],
     get: [authenticate("jwt")],
-    create: [hashPassword("password")],
-    update: [authenticate("jwt"), hashPassword("password")],
-    patch: [hashPassword("password")],
+    create: [
+      hashPassword("password"), // Allow public signup
+    ],
+    update: [disallow()],
+    patch: [authenticate("jwt"), hashPassword("password")],
     remove: [authenticate("jwt")],
   },
 
